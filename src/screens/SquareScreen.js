@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useReducer} from 'react';
 import {View, StyleSheet} from 'react-native';
 import ColorCounter from '../components/ColorCounter';
+import reducer from '../state/reducers/ColorReducer';
 
 const COLOR_INCREMENT = 10;
 
@@ -47,6 +48,31 @@ const SquareScreen = () => {
   )
 }
 
+const SquareScreen2 = () => {
+  const [state, dispatch] = useReducer(reducer, {red: 0, green: 0, blue: 0});
+
+  return (
+    <View>
+          <ColorCounter 
+            color='Red' 
+            onIncrease={() => dispatch({colorToChange: 'red', amount: COLOR_INCREMENT})} 
+            onDecrease={() => dispatch({colorToChange: 'red', amount: -1 * COLOR_INCREMENT})}
+          />
+          <ColorCounter 
+            color='Green' 
+            onIncrease={() => dispatch({colorToChange: 'green', amount: COLOR_INCREMENT})} 
+            onDecrease={() => dispatch({colorToChange: 'green', amount: -1 * COLOR_INCREMENT})}
+          />
+          <ColorCounter 
+            color='Blue' 
+            onIncrease={() => dispatch({colorToChange: 'blue', amount: COLOR_INCREMENT})} 
+            onDecrease={() => dispatch({colorToChange: 'blue', amount: -1 * COLOR_INCREMENT})}
+          />
+          <View style={{width: 100, height: 100, backgroundColor: `rgb(${state.red}, ${state.green}, ${state.blue})`}}/>
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({});
 
-export default SquareScreen;
+export default SquareScreen2;
