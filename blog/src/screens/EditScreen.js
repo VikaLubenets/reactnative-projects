@@ -1,11 +1,22 @@
-import React from "react";
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useContext, useState} from "react";
+import {StyleSheet } from 'react-native';
+import {Context} from "../context/Context";
+import BlogpostForm from '../components/BlogPostForm';
 
-const EditScreen = () => {
+const EditScreen = ({navigation}) => {
+  const { state, editBlogPost } = useContext(Context);
+  const id = navigation.getParam('id');
+  const blogPost = state.find(blogPost => blogPost.id === id)
+
   return (
-    <View>
-      <Text>This is an edit screen</Text>
-    </View>
+    <BlogpostForm 
+      onSumbit={(title, content) => {
+        editBlogPost(id, title, content)
+        navigation.pop();
+        }}  
+      initialValue={{title: blogPost.title, content: blogPost.content}}
+      namesOfLabels={['Edit Blog Post', 'Change title', 'Change content', 'Save Blog Post']}
+      />
   )
 }
 

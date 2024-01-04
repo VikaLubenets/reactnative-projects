@@ -1,11 +1,18 @@
-import React from "react";
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useContext} from "react";
+import {StyleSheet} from 'react-native';
+import BlogpostForm from "../components/BlogPostForm";
+import { Context as BlogsContext }from "../context/Context";
 
-const CreateScreen = () => {
+const CreateScreen = ({navigation}) => {
+  const {addBlogPost} = useContext(BlogsContext);
   return (
-    <View>
-      <Text>This is a create screen</Text>
-    </View>
+    <BlogpostForm 
+      onSumbit={(title, content) => {
+        addBlogPost(title, content)
+        navigation.navigate('Index')
+        }}  
+        namesOfLabels={['Create Blog Post', 'Add title', 'Add text', 'Create Blog Post']}
+      />
   )
 }
 
